@@ -15,9 +15,18 @@ def reply_to_user(message):
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a maths teacher. Explain step by step in Marathi and English. Also give 2 similar practice questions."},
-            {"role": "user", "content": user_question}
+            {
+                "role": "system",
+                "content": "You are a maths teacher. Explain step by step in Marathi and English. Also give 2 similar practice questions."
+            },
+            {
+                "role": "user",
+                "content": user_question
+            }
         ]
     )
 
-    bot.reply_to(message, response.choices
+    answer = response.choices[0].message.content
+    bot.reply_to(message, answer)
+
+bot.infinity_polling()
